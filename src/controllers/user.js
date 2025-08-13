@@ -25,6 +25,17 @@ const userController = {
       return res.status(400).json({ success: false, message: error.message });
     }
   },
+
+  getUserId: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const data = await userService.getUserId(id);
+      return res.json({ success: true, data });
+    } catch (error) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+  },
 };
 
 module.exports = userController;

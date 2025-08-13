@@ -35,15 +35,16 @@ const userService = {
     }
   },
 
-  // getUsers: () =>
-  //   new Promise(async (resolve, reject) => {
-  //     try {
-  //       const data = await User.findAll();
-  //       resolve(data);
-  //     } catch (error) {
-  //       reject(error);
-  //     }
-  //   }),
+  getUserId: async (id) => {
+    try {
+      const data = await User.findByPk(id);
+      if (!data) return reject(new Error("User not found!"));
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = userService;
