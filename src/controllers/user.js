@@ -1,0 +1,21 @@
+const userService = require("../services/user");
+
+const userController = {
+  createUser: async (req, res) => {
+    try {
+      const { firstName, lastName, email, password } = req.body;
+
+      const data = await userService.createUser({
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      return res.json({ success: true, data });
+    } catch (error) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+  },
+};
+
+module.exports = userController;
