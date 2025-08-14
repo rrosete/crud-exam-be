@@ -37,7 +37,7 @@ const userService = {
 
   getUserId: async (id) => {
     try {
-      const data = await User.findByPk(id);
+      const data = await User.findOne({ where: { id } });
       if (!data) return reject(new Error("User not found!"));
 
       return data;
