@@ -1,5 +1,5 @@
-const { getUsers } = require("../controllers/user");
 const BadRequestException = require("../exception/badRequestException");
+const NotFoundException = require("../exception/NotFoundException");
 const { User } = require("../models/index");
 
 const bcrypt = require("bcryptjs");
@@ -39,6 +39,43 @@ const userService = {
     try {
       const data = await User.findByPk(id);
       if (!data) return reject(new Error("User not found!"));
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateUser: async (id, { firstName, lastName }) => {
+    try {
+      const user = await User.findOne({ where: { id } });
+      if (!user) throw new NotFoundException("Not found user!");
+
+      const data = await User.update(
+        { lastName: lastName, firstName: firstName },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      const user = await User.findByPk(id);
+      if (!user) throw new NotFoundException("Not found user!");
+
+      const data = await User.destroy({
+        where: {
+          id,
+        },
+      });
 
       return data;
     } catch (error) {

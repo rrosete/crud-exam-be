@@ -36,6 +36,29 @@ const userController = {
       return res.status(400).json({ success: false, message: error.message });
     }
   },
+
+  updateUser: async (req, res) => {
+    try {
+      const { id, firstName, lastName } = req.params;
+      const data = await userService.updateUser(id, {
+        firstName,
+        lastName,
+      });
+      return res.json({ success: true, data });
+    } catch (error) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+  },
+
+  deleteUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await userService.deleteUser(id);
+      return res.json({ success: true, data });
+    } catch (error) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+  },
 };
 
 module.exports = userController;
